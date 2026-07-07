@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — CLAUDE.md Section 1. Approved; reuse only, never change hue.
+ * No gradients anywhere in this project.
+ */
+:root {
+  --bg-base: #0b0f14;
+  --bg-surface: #121820;
+  --bg-surface-raised: #1a222b;
+  --border-hairline: #26303a;
+  --border-hairline-hover: #3a4653;
+  --text-primary: #e7ecf1;
+  --text-secondary: #8b98a5;
+  --text-tertiary: #5a6673;
+  --accent-teal: #4fd1c5;
+  --accent-teal-hover: #3fbdb1; /* darkened ~8% for primary button hover */
+  --accent-teal-active: #37a69b; /* one step below hover — pressed fill, Section 3 "fill darkens further" */
+  --accent-amber: #f2b84b; /* one use only: "expected" date chip */
+
+  /* Admin-only tokens (PHASE_2.md Section 7) — never used on the public
+     site. Flat fills, same pattern as the primary button, no gradients. */
+  --admin-danger: #e5484d;
+  --admin-danger-hover: #d13c41; /* ~8% darker, same step as accent-teal-hover */
+  --admin-danger-active: #bd3439;
+}
+
+/* Light mode: token swap only, same structure (Section 1). */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-base: #f7f8fa;
+    --bg-surface: #ffffff;
+    --bg-surface-raised: #eef1f4; /* derived — not in Section 1 <!-- TODO: confirm with Umer --> */
+    --border-hairline: #e3e7eb;
+    --border-hairline-hover: #c9d1d9; /* derived — not in Section 1 <!-- TODO: confirm with Umer --> */
+    --text-primary: #12181f;
+    --text-secondary: #5a6673; /* derived — not in Section 1 <!-- TODO: confirm with Umer --> */
+    --text-tertiary: #77828e; /* derived — not in Section 1 <!-- TODO: confirm with Umer --> */
+    --accent-teal: #0f9e92; /* darkened for AA contrast on white — never raw dark-mode teal on light */
+    --accent-teal-hover: #0c877d; /* derived, same ~8% step <!-- TODO: confirm with Umer --> */
+    --accent-teal-active: #0a746b; /* derived <!-- TODO: confirm with Umer --> */
+    --accent-amber: #9a6f1d; /* derived for AA on light bg <!-- TODO: confirm with Umer --> */
+  }
+}
+
+@theme inline {
+  --color-bg-base: var(--bg-base);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-surface-raised: var(--bg-surface-raised);
+  --color-border-hairline: var(--border-hairline);
+  --color-border-hairline-hover: var(--border-hairline-hover);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-accent-teal: var(--accent-teal);
+  --color-accent-teal-hover: var(--accent-teal-hover);
+  --color-accent-teal-active: var(--accent-teal-active);
+  --color-accent-amber: var(--accent-amber);
+
+  --font-display: var(--font-hanken), sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), monospace;
+
+  /* Radius: 8px cards/buttons, 4px chips/tags — never mixed (Section 1) */
+  --radius-card: 8px;
+  --radius-chip: 4px;
+
+  /* Elevation appears only on hover/focus, never at rest (Section 2.1) */
+  --shadow-lift: 0 8px 20px rgba(0, 0, 0, 0.28);
+  --shadow-teal-glow: 0 8px 20px rgba(79, 209, 197, 0.15);
+
+  /* The one animation easing curve for the whole site (Section 7.4) */
+  --ease-brand: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/* Hero terminal cursor — the global reduced-motion rule below stops the blink */
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.cursor-blink {
+  animation: blink 1.1s step-end infinite;
+}
+
+/* Accessibility floor (Section 7): collapse all animation to instant state changes */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
